@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="appapi@head"/>
+    <title>开启小店</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/appapi/css/auth_status.css?t=1565083698">
+
+</head>
+<body>
+    <div class="auth_status">
+        <div class="status_img">
+            <img src="__STATIC__/appapi/images/auth_status.png">
+        </div>
+        
+        <div class="status_info">
+            <if condition="$info && $info['status'] eq 2">
+            <p class="status_info_t no"><img src="__STATIC__/appapi/images/auth_error.png">审核未通过</p>
+            <p class="status_info_d">{$info['reason']}</p>
+            <else/>
+            <p class="status_info_t">信息审核中...</p>
+            <p class="status_info_d">3个工作日内会有审核结果，请耐心等待</p>
+            </if>
+        </div>
+        
+        <if condition="$info && $info['status'] eq 2">
+        <div class="autharea">
+            <a href="/Appapi/shop/index?uid={$uid}&token={$token}&reset=1">重新认证</a>
+        </div>
+        </if>
+    </div>
+	<include file="appapi@footer"/>
+</body>
+</html>

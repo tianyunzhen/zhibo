@@ -1,0 +1,51 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:url('addynamic/index')}">动态视频广告列表</a></li>
+        <li><a href="{:url('addynamic/add')}">添加动态视频广告</a></li>
+        <li class="active"><a href="{:url('addynamic/adtext')}">纯文字广告列表</a></li>
+        <li><a href="{:url('addynamic/addadtext')}">添加纯文字广告</a></li>
+        <li><a href="{:url('addynamic/adpic')}">添加文字+图片广告</a></li>
+    </ul>
+    <table class="table table-hover table-bordered margin-top-20">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>用户id</th>
+            <th>广告内容</th>
+
+            <th>跳转地址</th>
+            <th>跳转方式</th>
+            <th width="160">{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+
+        <php>
+
+        </php>
+
+        <tbody>
+        <foreach name="lists" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.uid}</td>
+                <td>{$vo.title}</td>
+
+                <td>{$vo.is_adurl}</td>
+                <td>{$vo.is_adtype}</td>
+
+                <td>
+
+
+                    <a class="btn btn-xs btn-danger js-ajax-delete" href="{:url('addynamic/deleteadtext',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

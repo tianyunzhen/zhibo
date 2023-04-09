@@ -1,0 +1,28 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <div class="form-group">
+        <div class="col-md-6 col-sm-10">
+            <if condition="!empty($images)">
+                <tbody>
+                    <foreach name="images" item="vo">
+                        <tr>
+                            <td><img src="{$vo}" style="cursor: pointer;max-width:200px;max-height:200px;"/></td>
+                        </tr>
+                    </foreach>
+                </tbody>
+            </if>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<style type="text/css">
+    img:hover{
+        transform:scale(3,3);
+        z-index: 99999;
+        position: relative;
+    }
+</style>
+</body>
+</html>

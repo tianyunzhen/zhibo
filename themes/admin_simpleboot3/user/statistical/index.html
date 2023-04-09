@@ -1,0 +1,73 @@
+<include file="public@header"/>
+<style>
+.table img{
+	width:25px;
+	height:25px;
+}
+
+#pop{
+    display:none; 
+}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>新增用户</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('user/statistical/index')}">
+        手机类型：
+        <select class="form-control" name="ishot">
+            <option value="">全部</option>
+                <option value="1" <if condition="input('request.ishot') neq '' && input('request.ishot') eq 1">selected</if>>是</option>
+                <option value="0" <if condition="input('request.ishot') neq '' && input('request.ishot') eq 0">selected</if>>否</option>
+        </select>
+        渠道：
+        <select class="form-control" name="source">
+            <option value="">全部</option>
+                <option value="pc" <if condition="input('request.source') neq '' && input('request.source') eq 'pc'">selected</if>>PC</option>
+                <option value="android" <if condition="input('request.source') neq '' && input('request.source') eq 'android'">selected</if>>安卓APP</option>
+                <option value="ios" <if condition="input('request.source') neq '' && input('request.source') eq 'ios'">selected</if>>苹果APP</option>
+        </select>
+
+        时间：
+        <input class="form-control js-bootstrap-date" name="start_time" id="start_time" value="{:input('request.start_time')}" aria-invalid="false" style="width: 110px;"> - 至
+        <input class="form-control js-bootstrap-date" name="end_time" id="end_time" value="{:input('request.end_time')}" aria-invalid="false" style="width: 110px;">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('user/statistical/index')}">清空</a>
+    </form>
+    <if  condition="$total['have'] eq 0">
+        <b>暂无数据</b>
+        <else/>
+        <b>汇总统计：时间：{$total['start_date']} - {$total['end_date']} &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;总新增人数：{$total['total_user']}人, 男{$total['total_male']}人，女{$total['total_female']}人</b>
+    </if>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>日期</th>
+                <th>新增激活</th>
+                <th>新增注册</th>
+                <th>注册设备</th>
+                <th>注册转化率</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo['create_date']}</td>
+                    <td>{$vo['activate']}</td>
+                    <td>{$vo['register']}</td>
+                    <td>{$vo['reg_equipment']}</td>
+                    <td>{$vo['reg_transform']}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/laydate/laydate.js"></script>
+</body>
+</html>

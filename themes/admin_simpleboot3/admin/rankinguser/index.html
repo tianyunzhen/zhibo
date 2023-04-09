@@ -1,0 +1,81 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >列表</a></li>
+		</ul>
+		<form class="well form-inline margin-top-20" method="post" action="{:url('rankinguser/index')}">
+			用户ID：
+			<input class="form-control" type="text" name="uid" style="width: 200px;" value="{:input('request.uid')}"
+				   placeholder="请输入用户ID">
+			认证筛选：
+			<select class="form-control" name="remark_id">
+				<option value="">全部</option>
+				<volist name="remark" id="v">
+					<option value="{$v['id']}" <if condition="input('request.remark_id') neq '' && input('request.remark_id') eq $v['id']">selected</if>>{$v['auth_desc']}</option>
+				</volist>
+			</select>
+			时间：
+			<input class="form-control js-bootstrap-date" name="start_time" id="start_time" value="{:input('request.start_time')}" aria-invalid="false" style="width: 110px;"> -
+			<input class="form-control js-bootstrap-date" name="end_time" id="end_time" value="{:input('request.end_time')}" aria-invalid="false" style="width: 110px;">
+			<input type="submit" class="btn btn-primary" value="搜索"/>
+			<a class="btn btn-danger" href="{:url('rankinguser/index')}">清空</a>
+			<div style="margin-top:10px">
+				合计：{$total_coin} 丫粮    任务奖励人数：{$total_task_person}  任务奖励丫粮：{$total_task}
+			</div>
+		</form>
+		<form method="post" class="js-ajax-form">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>排名</th>
+						<th>主播ID</th>
+						<td>主播昵称</td>
+						<td>认证信息</td>
+						<td>直播流水</td>
+						<th>播放时长</th>
+						<th>奖励（丫粮）</th>
+						<th>档位</th>
+						<th>状态</th>
+						<th>周期开始时间</th>
+						<th>奖励发放时间</th>
+						<th>{:lang('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>{$vo.no}</td>
+						<td>{$vo['uid']}</td>
+						<td>{$vo['user_nicename']}</td>
+						<td>{$vo['auth_desc']}</td>
+						<td>{$vo['water']}</td>
+						<td>{$vo['times']}</td>
+						<td>{$vo['money']}</td>
+						<td>{$vo['gear']}</td>
+						<td>{$status[$vo['status']]}</td>
+						<td>{:date('Y-m-d',$vo['periods'])}</td>
+						<td>
+							<if condition="$vo['upd_time'] gt 0">
+								{:date('Y-m-d H:i:s',$vo['upd_time'])}
+								<else/>
+							</if>
+						</td>
+						<td>
+							<if condition="$vo['status'] eq '2'">
+								<a class="btn btn-xs btn-primary" href='{:url("Rankinguser/grant",array("id"=>$vo["id"],"type" => 1))}'>发放</a>
+								<a class="btn btn-xs btn-primary" href='{:url("Rankinguser/grant",array("id"=>$vo["id"], "type" => 2))}'>拒绝发放</a>
+								<else/>
+							</if>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

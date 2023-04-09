@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <include file="appapi@head"/>
+	<link type="text/css" rel="stylesheet" href="__STATIC__/appapi/css/shop.css"/> 
+    <title>我的小店</title>
+</head>
+<body>
+    <div class="ready">
+        <div class="ready_top">
+            <p class="ready_top_t">申请条件</p>
+            <p class="ready_top_d">完成以下条件即可申请店铺</p>
+        </div>
+        <div class="ready_info">
+            <ul>
+                <li>
+                    <div class="li_img">
+                        <img src="__STATIC__/appapi/images/shop/fans.png">
+                    </div>
+                    <div class="li_info">
+                        <p class="li_info_t">粉丝数量</p>
+                        <p class="li_info_d">>={$shop_fans}名</p>
+                    </div>
+                    
+                    <div class="li_btn">
+                        <if condition="$fans_ok eq 1">
+                        <span class="ok">已达成</span>
+                        <else/>
+                        <span class="fans_no">未达成</span>
+                        </if>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="li_img">
+                        <img src="__STATIC__/appapi/images/shop/level.png">
+                    </div>
+                    <div class="li_info">
+                        <p class="li_info_t">主播等级</p>
+                        <p class="li_info_d">>=Lv.{$shop_level}</p>
+                    </div>
+                    
+                    <div class="li_btn">
+                        <if condition="$level_ok eq 1">
+                        <span class="ok">已达成</span>
+                        <else/>
+                        <!-- <span class="no">去完成</span> -->
+                        <span class="fans_no">未达成</span>
+                        </if>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="li_img">
+                        <img src="__STATIC__/appapi/images/shop/bond.png">
+                    </div>
+                    <div class="li_info">
+                        <p class="li_info_t">缴纳保证金</p>
+                        <p class="li_info_d">{$shop_bond}<img src="__STATIC__/appapi/images/coin.png" class="coin"></p>
+                    </div>
+                    
+                    <div class="li_btn">
+                        <if condition="$bond_ok eq 1">
+                        <span class="ok">已达成</span>
+                        <else/>
+                        <!-- <span class="no">去完成</span> -->
+                        <a class="fans_no bond_btn" href="/appapi/shop/bond?uid={$uid}&token={$token}">去缴纳</a>
+                        </if>
+                        
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="ready_tips">
+            <!-- <div class="ready_tips_t">获得权益</div> -->
+            <div class="ready_tips_d">店铺创建完成您将获得以下权益</div>
+            <div class="ready_tips_d2">
+                <p>1. 个人主页拥有我的小店橱窗入口</p>
+                <p>2. 在直播间内添加直播购物车</p>
+                <p>3. 发布短视频作品时可关联商品</p>
+            </div>
+        </div>
+        <div class="ready_apply">
+            <a <if condition="$isapply eq '1'">href="/appapi/shop/apply?uid={$uid}&token={$token}&reset=1" class="on"</if> >立即申请</a>
+        </div>
+
+    </div>
+	<include file="appapi@footer"/>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:url('Ranking/index')}">列表</a></li>
+			<li class="active"><a >{:lang('ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Ranking/addPost')}">
+
+            <div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label"><span class="form-required">*</span>标题</label>
+				<div class="col-md-2 col-sm-2">
+					<input type="text" class="form-control" id="input-title" name="title" required="required">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-type" class="col-sm-2 control-label"><span class="form-required">*</span>类型</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="form-control" name="type">
+						<volist name="type" id="v">
+							<option value="{$key}">{$v}</option>
+						</volist>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-no" class="col-sm-2 control-label"><span class="form-required">*</span>等级</label>
+				<div class="col-md-4 col-sm-4">
+					<input type="text" class="form-control" id="input-no" name="no" required="required">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-money" class="col-sm-2 control-label"><span class="form-required">*</span>金额</label>
+				<div class="col-md-4 col-sm-4">
+					<input type="text" class="form-control" id="input-money" name="money" required="required">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-min" class="col-sm-2 control-label"><span class="form-required">*</span>最低名次</label>
+				<div class="col-md-4 col-sm-4">
+					<input type="text" class="form-control" id="input-min" name="min" required="required">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-max" class="col-sm-2 control-label"><span class="form-required">*</span>最高名次</label>
+				<div class="col-md-4 col-sm-4">
+					<input type="text" class="form-control" id="input-max" name="max" required="required">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+            
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

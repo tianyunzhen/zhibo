@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<include file="appapi@head"/>
+		<title>额度转换</title>
+		<link href='__STATIC__/appapi/css/level.css?t=1561712925' rel="stylesheet" type="text/css" >
+			<link type="text/css" rel="stylesheet" href="__STATIC__/appapi/css/family.css?t=1561712925"/>
+	</head>
+<body >
+
+	<div class="main">
+
+        <div class="line10"></div>
+		<div class="top-body ">
+			<div class="level">
+				<div class="speed">
+					<div class="info">
+						<div class="name">
+                            <img src="{$userinfo['avatar']}">
+                        </div>
+                        <div class="avatar_bg"></div>
+						<div class="tip">Lv.{$levelinfo['levelid']}</div>
+					</div>
+					 <div class="level_jindu">
+                        <div class="level_jindu_l">
+                            Lv.{$levelinfo['levelid']}
+                        </div>
+                        <div class="jindu">
+                            <div class="levelnp">
+                                <div class="leveln n2 bg_default" id="progress" style="width:{$baifen}%; border-radius: 4px;"></div>
+                            </div>
+                        </div>
+                        <div class="level_jindu_r">
+                            <if condition="$type eq '1'">
+                                Lv.{$levelinfo['levelid']+1}
+                            <else/>
+                                Lv.Max
+                            </if>
+                        </div>
+                    </div>
+					<div class="level_val">
+						直播丫币余额：<span id="total" style="margin-right: 10px;"><a style=color:red;>{$userinfo['coin']}</span>
+					</div>
+					<div class="level_val">
+						<a style="color:black">游戏丫币余额：</a>
+						<span id="total" style="margin-right: 10px;"><a style=color:red;>{$userinfo['coin']}</span>
+					</div>
+
+					
+				</div>
+			</div>
+			<div class="line10"></div>
+
+		<form id="apply_form" class="apply_form" action="upcoin" method="post">
+			<input type="hidden" id="uid" name ="uid" value="{$uid}">
+			<input type="hidden" id="token" name ="token" value="{$token}">
+			<div id="upload" ></div>
+			<div class="top-title bg_default" style="color:white"><center>额度转换</center></div><br><br>
+            <div class="apply_form_content">
+            	 <div class="term">
+                    <span class="form_span">转换模式</span>
+                   <select name="type" id="type" class="form_input">
+
+                       <option value="1">直播丫币转游戏丫币</option>
+                       <option value="2">游戏丫币转直播丫币</option>
+                       <option value="0" selected="selected">--请选择转换模式--</option>
+                   </select>
+                </div>
+                <br>
+                <div class="line" ></div>
+                <div class="term">
+                    <span class="form_span">转换金额</span>
+                    <input type="text" placeholder="请输入您的需要转换的金额" id="needcoin" name="needcoin" class="form_input"/>
+                </div>
+                <div class="line" ></div>
+                
+            </div>
+            <input class="button button_default" id="button" type='submit' onclick="apply_judge()" value="开始转换"/>
+		</form>
+				
+			</div>
+
+		
+		</div>
+		
+		<div class="top-body hide">
+			<div class="level level_a">
+				<div class="speed">
+                    <div class="info">
+						<div class="name">
+                            <img src="{$userinfo['avatar']}">
+                        </div>
+                        <div class="avatar_bg"></div>
+						<div class="tip">Lv.{$levelinfo_a['levelid']}</div>
+					</div>
+					<div class="level_val">
+						经验值：<span id="total" style="margin-right: 10px;">{$userinfo['votestotal']}</span>
+						<if condition="$type_a eq '1'">
+							距离升级：<span id="next_diff">{$cha_a}</span>
+						<else/>
+							你已经达到最高级别
+						</if>
+					</div>
+                    <div class="level_jindu">
+                        <div class="level_jindu_l">
+                            Lv.{$levelinfo_a['levelid']}
+                        </div>
+                        <div class="jindu">
+                            <div class="levelnp">
+                                <div class="leveln n2 bg_default" id="progress" style="width:{$baifen_a}%; border-radius: 4px;"></div>
+                            </div>
+                        </div>
+                        <div class="level_jindu_r">
+                            <if condition="$type_a eq '1'">
+                                Lv.{$levelinfo_a['levelid']+1}
+                            <else/>
+                                Lv.Max
+                            </if>
+                        </div>
+                    </div>
+
+				</div>
+			</div>
+			<div class="line10"></div>
+			<div class="privilege clearfix">
+				<div class="title">等级特权</div>
+				<ul>
+					<li>
+                        <img src="__STATIC__/appapi/images/level/m_level_id.png">
+                        <div class="privilege_t">等级标识</div>
+                    </li>
+					<li>
+                        <img src="__STATIC__/appapi/images/level/m_level_id2.png">
+                        <div class="privilege_t">身份标识</div>
+                    </li>
+				</ul>
+			</div>
+			<div class="line10"></div>
+			<div class="upgrade">
+				<div class="title">如何升级</div>
+				<div class="body">
+					<img src="__STATIC__/appapi/images/level/m_up.png">
+				</div>
+			</div>	
+            <div class="line10"></div>
+			<div class="tips">
+				<a href="/appapi/level/level_a">主播等级说明</a>
+			</div>
+		</div>
+
+	</div> 
+</body>
+
+<include file="appapi@footer"/>
+<script>
+	(function(){
+		$(".tab ul li").on("click",function(){
+			$(this).siblings().removeClass("on");
+			$(this).addClass("on");
+			$(".top-body").hide().eq($(this).index()).show();
+		})
+	})()
+</script>
+</body>
+</html>

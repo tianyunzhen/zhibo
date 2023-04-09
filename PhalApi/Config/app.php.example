@@ -1,0 +1,90 @@
+<?php
+/**
+ * 请在下面放置任何您需要的应用配置
+ */
+
+return array(
+
+    /**
+     * 应用接口层的统一参数
+     */
+    'apiCommonRules' => array(
+        //'sign' => array('name' => 'sign', 'require' => true),
+    ),
+//    'REDIS_HOST' => "47.114.175.22",
+    'REDIS_HOST' => "127.0.0.1",
+    'REDIS_AUTH' => "f2CEyjKRIWuS9rhp",
+//    'REDIS_AUTH' => "",
+    'REDIS_PORT' => "36789",
+//    'REDIS_PORT' => "6379",
+
+    'sign_key' => '76576076c1f5f657b634e966c8836a06',
+		
+	'uptype'=>1,//上传方式：1表示 七牛，2表示 本地
+		/**
+     * 七牛相关配置
+     */
+    'Qiniu' =>  array(
+        //统一的key
+//        'accessKey' => 'zBzIVAEaB1NH9c8Jl7xVM4NqqSPlZkKi14EBntFF',app.php
+        'accessKey' => 'zl0Tw3Vu39m3Rh86J8XJdfySKsg-7dWqyhdk5Ir2',
+//        'secretKey' => 'b8UwtHNF6q-XrMeGKRzzC0Nq5nzm9SEiHTDQcQC8',
+        'secretKey' => 'i9Z5ZLCPXqKd9HSx1i3JD4VkbGVIw6DLZ2gaOj9f',
+        //自定义配置的空间
+        'space_bucket' => 'boya-live-test',
+//        'space_bucket' => 'daweitupian',
+//        'space_host' => 'http://qc00cjawr.bkt.clouddn.com',
+        'space_host' => 'http://fs.51liaobei.com',
+//        'space_host' => 'http://tupian.daweia.cn',
+//        'uphost' => 'http://boya-live-test.s3-cn-east-1.qiniucs.com', //区域上传域名(服务端)
+        'uphost' => 'http://up-z0.qiniup.com', //区域上传域名(服务端)
+    ),
+
+		 /**
+     * 本地上传
+     */
+    'UCloudEngine' => 'local',
+
+    /**
+     * 本地存储相关配置（UCloudEngine为local时的配置）
+     */
+    'UCloud' => array(
+        //对应的文件路径
+        'host' => 'http://zhibo.dawei.cn/upload' 
+    ),
+		
+		/**
+     * 云上传引擎,支持local,oss,upyun
+     */
+    //'UCloudEngine' => 'oss',
+
+    /**
+     * 云上传对应引擎相关配置
+     * 如果UCloudEngine不为local,则需要按以下配置
+     */
+   /*  'UCloud' => array(
+        //上传的API地址,不带http://,以下api为阿里云OSS杭州节点
+        'api' => 'oss-cn-hangzhou.aliyuncs.com',
+
+        //统一的key
+        'accessKey' => '',
+        'secretKey' => '',
+
+        //自定义配置的空间
+        'bucket' => '',
+        'host' => 'http://image.xxx.com', //必带http:// 末尾不带/
+
+        'timeout' => 90
+    ), */
+
+    'ChuangLan' =>  [
+        'android_appId' => 'lGxRMepA',
+        'android_appKey' => 'mIw896z3',
+        'ios_appId' => 'L3Zlonvo',
+        'ios_appKey' => '0wRrP6mx',
+//        'privateKey' => '',
+        'url' => 'https://api.253.com/open/flashsdk/mobile-query',
+    ],
+
+    '' => []
+);

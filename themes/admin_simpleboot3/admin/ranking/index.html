@@ -1,0 +1,48 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >列表</a></li>
+			<li><a href="{:url('Ranking/add')}">{:lang('ADD')}</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form" action="{:url('Ranking/index')}">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>标题</th>
+						<td>类型</td>
+						<td>等级</td>
+						<th>金额</th>
+						<th>最低名次</th>
+						<th>最高名次</th>
+						<th>添加时间</th>
+						<th>{:lang('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo['title']}</td>
+						<td>{$type[$vo['type']]}</td>
+						<td>{$vo['no']}</td>
+						<td>{$vo['money']}</td>
+						<td>{$vo['min']}</td>
+						<td>{$vo['max']}</td>
+						<td>{:date('Y-m-d H:i',$vo['add_time'])}</td>
+						<td>
+                            <!--<a class="btn btn-xs btn-primary" href='{:url("Ranking/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>-->
+							<!--<a class="btn btn-xs btn-danger js-ajax-delete" href="{:url('Ranking/del',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>-->
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

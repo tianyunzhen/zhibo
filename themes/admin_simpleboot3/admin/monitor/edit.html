@@ -1,0 +1,129 @@
+<include file="public@header" />
+</head>
+<body>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script src="__STATIC__/home/js/socket.io.js"></script>
+	<script src="__STATIC__/xigua/xgplayer.js?t=1574906138" type="text/javascript"></script>
+	<script src="__STATIC__/xigua/xgplayer-flv.js.js" type="text/javascript"></script>
+	<script src="__STATIC__/xigua/xgplayer-hls.js.js" type="text/javascript"></script>
+	<script src="__STATIC__/xigua/player.js" type="text/javascript"></script>
+
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >{:lang('EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Monitor/editPost')}">
+            <div class="form-group">
+				<label for="input-id" class="col-sm-2 control-label"><span class="form-required">*</span>ID</label>
+				<div class="col-md-6 col-sm-10" style="padding-top:7px;">
+					{$data['id']}
+				</div>
+			</div>
+            
+            <div class="form-group">
+				<label for="input-user_nicename" class="col-sm-2 control-label"><span class="form-required">*</span>主播昵称</label>
+				<div class="col-md-6 col-sm-10" style="padding-top:7px;">
+					{$data['user_nicename']}
+				</div>
+			</div>
+
+            <div class="form-group">
+				<label for="input-type" class="col-sm-2 control-label"><span class="form-required">*</span>类型</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="form-control" name="type" id="my_type">
+                        <volist name="type" id="v">
+                        <option value="{$key}">{$v}</option>
+                        </volist>
+                    </select>
+				</div>
+			</div>
+
+			<div class="form-group" style="display:none" id="thumb">
+				<label for="input-thumb" class="col-sm-2 control-label"><span class="form-required"></span>直播封面</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="hidden" name="thumb" id="thumbnail" value="{$data['avatar']}">
+					<a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+						<if condition="empty($data.avatar)">
+							<img src="__TMPL__/public/assets/images/default-thumbnail.png"
+								 id="thumbnail-preview"
+								 style="cursor: pointer;max-width:100px;max-height:100px;"/>
+							<else/>
+							<img src="{:cmf_get_image_preview_url($data.avatar)}"
+								 id="thumbnail-preview"
+								 style="cursor: pointer;max-width:100px;max-height:100px;"/>
+						</if>
+					</a>
+					<input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片"> 建议尺寸： 200 X 200
+				</div>
+			</div>
+            
+            <div class="form-group">
+				<label for="input-reason" class="col-sm-2 control-label"><span class="form-required">*</span>描述</label>
+				<div class="col-md-6 col-sm-10">
+					<textarea class="form-control" id="input-reason" name="reason" >{$data.reason|default=''}</textarea>
+				</div>
+			</div>
+
+            <div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$data.id}" />
+					<!--<button type="submit" class="btn btn-primary js-ajax-submit">提交</button>-->
+					<a  onclick="closeRoom('<?php echo $data['id'];?>')" class="btn btn-xs btn-warning">提交</a>
+					<!--<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>-->
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js">
+	</script>
+	<script type="text/javascript">
+        $("#my_type").change(function(){
+            if ($("#my_type option:selected").val() == 5) {
+                $("#thumb").show()
+            } else {
+                $("#thumb").hide()
+			}
+        });
+        var socket = new io("{$config['chatserver']}");
+        // var socket = new io("127.0.0.1:19967");
+        // alert("{$config['chatserver']}");
+        function closeRoom(roomId){
+            var data2 = {"token":"1234567","roomnum":roomId};
+            var my_type = $("#my_type option:selected");
+            var s_type = my_type.val();
+            var thumb = $("#thumbnail").val();
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: '/admin/Monitor/editPost',
+                data:{id:roomId, s_type:s_type, thumb:thumb},
+                dataType: "json",
+                success: function(data){
+                    console.log(data);
+                    if(data.status ==0){
+                        alert(data.info);
+                    }else{
+                        //关闭
+                        if (s_type == 1) {
+                            socket.emit("superadminaction",data2);
+						}
+						//警告
+						if (s_type == 2) {
+                            socket.emit("warning",data2);
+						}
+                        // location.reload();
+                        window.opener=null;
+                        window.open('','_self');
+                        window.close();
+						// window.close();
+                    }
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    alert('关闭失败，请重试');
+                }
+            });
+        }
+	</script>
+</body>
+</html>

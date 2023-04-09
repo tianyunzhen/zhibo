@@ -1,0 +1,81 @@
+<include file="public@header"/>
+<style>
+.table img{
+	width:25px;
+	height:25px;
+}
+
+#pop{
+    display:none; 
+}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>渠道数据</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('channel/default')}">
+        手机类型：
+        <select class="form-control" name="type">
+            <option value="">全部</option>
+                <option value="1" <if condition="input('request.type') neq '' && input('request.type') eq 1">selected</if>>苹果</option>
+                <option value="2" <if condition="input('request.type') neq '' && input('request.type') eq 2">selected</if>>安卓</option>
+        </select>
+        渠道：
+        <select class="form-control" name="channel_name">
+            <option value="">全部</option>
+            <volist name="channels" id="v">
+                <option value="{$v}" <if condition="input('request.channel_name') neq '' && input('request.channel_name') eq $v">selected</if>>{$v}</option>
+            </volist>
+        </select>
+
+        时间：
+        <input class="form-control js-bootstrap-date" name="start_time" id="start_time" value="{:input('request.start_time')}" aria-invalid="false" style="width: 110px;"> - 至
+        <input class="form-control js-bootstrap-date" name="end_time" id="end_time" value="{:input('request.end_time')}" aria-invalid="false" style="width: 110px;">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('user/statistical/index')}">清空</a>
+    </form>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>渠道名称</th>
+                <th>活跃用户</th>
+                <th>新增用户</th>
+                <th>付费用户</th>
+                <th>认证主播</th>
+                <th>新增比例</th>
+                <th>付费比例</th>
+                <th>GMV</th>
+                <th>ARPU</th>
+                <th>ARPPU</th>
+                <th>LTV</th>
+                <!--<th>操作</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo['channel_name']}</td>
+                    <td>{$vo['active_num']}</td>
+                    <td>{$vo['add_num']}</td>
+                    <td>{$vo['pay_num']}</td>
+                    <td>{$vo['remark_num']}</td>
+                    <td>{$vo['add_percent']}</td>
+                    <td>{$vo['pay_percent']}</td>
+                    <td>{$vo['gmv']}</td>
+                    <td>{$vo['arpu']}</td>
+                    <td>{$vo['arppu']}</td>
+                    <td>{$vo['ltv']}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/laydate/laydate.js"></script>
+</body>
+</html>

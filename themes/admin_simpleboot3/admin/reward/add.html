@@ -1,0 +1,78 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:url('Manual/index')}">列表</a></li>
+			<li class="active"><a >充值</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Manual/addPost')}">
+
+            <div class="form-group">
+				<label for="input-touid" class="col-sm-2 control-label"><span class="form-required">*</span>会员ID</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-touid" name="touid">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-type" class="col-sm-2 control-label"><span class="form-required">*</span>类型</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="form-control" name="type">
+						<option value="1">丫币</option>
+						<option value="2">丫粮</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-reason" class="col-sm-2 control-label"><span class="form-required">*</span>原因</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="form-control" name="reason">
+						<volist name="reason" id="v">
+							<option value="{$key}">{$v}</option>
+						</volist>
+					</select>
+				</div>
+			</div>
+
+            <div class="form-group">
+				<label for="input-coin" class="col-sm-2 control-label"><span class="form-required">*</span>数量</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-coin" name="coin">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label"><span></span>推送标题</label>
+				<div class="col-md-6 col-sm-10">
+					<textarea class="form-control" id="input-title" name="title" ></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-content" class="col-sm-2 control-label"><span></span>推送内容</label>
+				<div class="col-md-6 col-sm-10">
+					<textarea class="form-control" id="input-content" name="content" ></textarea>推送的消息仅支持文字，不支持图片及视频文件
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-remark" class="col-sm-2 control-label"><span class="form-required"></span>备注</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-remark" name="remark">
+				</div>
+			</div>
+            
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+            
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap">
+	<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('adminIndex/addWeight')}">
+		<div class="form-group">
+			<label for="input-live_weight" class="col-sm-2 control-label"><span class="form-required">*</span>权重值</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" id="input-live_weight" name="live_weight">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-6 col-sm-10">
+				<input type="hidden" name="uid" value="{$uid}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">确认</button>
+				<a class="btn btn-default" href="javascript:history.back(-1);">取消</a>
+			</div>
+		</div>
+	</form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap">
+	<ul class="nav nav-tabs">
+		<li ><a href="{:url('Car/index')}">列表</a></li>
+		<li class="active"><a >{:lang('EDIT')}</a></li>
+	</ul>
+	<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('advert/editPost')}">
+		<div class="form-group">
+			<label for="input-site" class="col-sm-2 control-label"><span class="form-required">*</span>位置</label>
+			<div class="col-md-6 col-sm-10">
+				<select class="form-control" name="site">
+					<option value="1" <eq name="data['site']" value="1">selected</eq>>热门</option>
+					<option value="2" <eq name="data['site']" value="2">selected</eq>>附近</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>名称</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" id="input-name" name="name" value="{$data['name']}">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-pic" class="col-sm-2 control-label"><span class="form-required">*</span>图片</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="hidden" name="pic" id="thumbnail" value="{$data['pic']}">
+				<a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+					<if condition="empty($data.pic)">
+						<img src="__TMPL__/public/assets/images/default-thumbnail.png"
+							 id="thumbnail-preview"
+							 style="cursor: pointer;max-width:100px;max-height:100px;"/>
+						<else/>
+						<img src="{:cmf_get_image_preview_url($data.pic)}"
+							 id="thumbnail-preview"
+							 style="cursor: pointer;max-width:100px;max-height:100px;"/>
+					</if>
+				</a>
+				<input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片"> 建议尺寸： 200 X 200
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-link" class="col-sm-2 control-label"><span class="form-required">*</span>链接</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" id="input-link" name="link" value="{$data['link']}">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-sort" class="col-sm-2 control-label"><span class="form-required">*</span>排序</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" id="input-sort" name="sort" value="{$data['sort']}">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-is_pre" class="col-sm-2 control-label"><span class="form-required">*</span>是否为预发布</label>
+			<div class="col-md-6 col-sm-10">
+				<select class="form-control" name="is_pre">
+					<option value="1" <eq name="data['is_pre']" value="1">selected</eq>>是</option>
+					<option value="2" <eq name="data['is_pre']" value="2">selected</eq>>否</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-package_id" class="col-sm-2 control-label"><span class="form-required">*</span>匹配包</label>
+			<div class="col-md-6 col-sm-10">
+				<select class="form-control" name="package_id">
+					<volist name="package" id="v">
+						<option value="{$v.id}" <eq name="data['package_id']" value="$v.id">selected</eq>>{$v.name}</option>
+					</volist>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-start_time" class="col-sm-2 control-label"><span class="form-required">*</span>开始时间</label>
+			<div class="col-md-2 col-sm-2">
+				<input class="form-control js-bootstrap-datetime" name="start_time" id="start_time" value="{:date('Y-m-d H:i',$data['start_time'])}" aria-invalid="false" style="width: 200px;" required="required">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-end_time" class="col-sm-2 control-label"><span class="form-required">*</span>开始时间</label>
+			<div class="col-md-2 col-sm-2">
+				<input class="form-control js-bootstrap-datetime" name="end_time" id="end_time" value="{:date('Y-m-d H:i',$data['end_time'])}" aria-invalid="false" style="width: 200px;" required="required">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-wealth_level" class="col-sm-2 control-label"><span class="form-required">*</span>财富等级可见</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" id="input-wealth_level" name="wealth_level" value="{$data['wealth_level']}">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<input type="hidden" name="id" value="{$data.id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+				<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+			</div>
+		</div>
+
+	</form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    (function(){
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+        $('.btn-cancel-thumbnail2').click(function () {
+            $('#thumbnail2-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail2').val('');
+        });
+    })()
+
+</script>
+</body>
+</html>

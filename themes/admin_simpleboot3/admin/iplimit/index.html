@@ -1,0 +1,94 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a>列表</a></li>
+		</ul>
+		<form class="well form-inline margin-top-20" method="post" action="{:url('iplimit/index')}">
+			<input class="form-control" type="text" name="ip" style="width: 200px;" value="{:input('request.ip')}"
+				   placeholder="请输入IP">
+			<input type="submit" class="btn btn-primary" value="搜索">
+		</form>
+		<form method="post" class="js-ajax-form" >
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>IP地址</th>
+						<th>昵称</th>
+						<th>注册时间</th>
+						<th>手机</th>
+						<th>账上丫币</th>
+						<th>状态</th>
+						<th>操作人</th>
+						<th>操作时间</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>{$vo.ip}</td>
+						<td>{$vo['user_nicename']}</td>
+						<td>{:date('Y-m-d H:i',$vo['create_time'])}</td>
+						<td>{$vo['mobile']}</td>
+						<td>{$vo['coin']}</td>
+						<td>
+							<if condition="$vo['status'] eq 1">
+								封禁中
+							<else/>
+								已解禁
+							</if>
+						</td>
+						<td>{$vo['operator']}</td>
+						<td>{:date('Y-m-d H:i',$vo['addtime'])}</td>
+						<td align="center">
+							<if condition="$vo['status'] eq '1'">
+								<a class="btn btn-xs btn-primary" href='{:url("admin/iplimit/switch",array("id"=>$vo["id"], "status" => 0))}'>解封IP</a>
+							<else/>
+								<a class="btn btn-xs btn-primary" href='{:url("admin/iplimit/switch",array("id"=>$vo["id"], "status" => 1))}'>禁封IP</a>
+							</if>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script type="text/javascript">
+        function closeRoom(obj) {
+            var tr = $(obj).parent();
+            var id = tr.children('td').eq(0).text();
+            var avatar = tr.children('td').eq(1).children('input').val();
+            var user_nicename = tr.children('td').eq(2).text();
+            var signature = tr.children('td').eq(3).text();
+			$.ajax({
+				type: 'POST',
+				async: false,
+				url: '/admin/violation/editPost',
+				data:{
+				    id:id,
+					avatar:avatar,
+					user_nicename:user_nicename,
+					signature:signature
+				},
+				dataType: "json",
+				success: function(data){
+					console.log(data);
+					if(data.status ==0){
+						alert(data.info);
+					}else{
+						location.reload();
+						// history.back();
+					}
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					alert('编辑失败！');
+				}
+			});
+        }
+	</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('Gift/index')}">礼物列表</a></li>
+			<li class="active"><a >列表</a></li>
+		</ul>
+		<div class="form-group">
+			<label for="input-total_times" class="col-sm-1 control-label"><span class="form-required"></span>总倍数</label>
+			<div class="col-md-2 col-sm-1">
+				<input type="text" class="form-control" id="input-total_times" name="levelid" value="{$total_times}">
+			</div>
+		</div>
+		<div id = "all">
+			<!--<div id="son">-->
+				<foreach name="lists" item="vo" key="k">
+					<label for="input-cycle" class="col-sm-1 control-label"><span class="form-required"></span>中奖周期</label>
+					<div class="col-md-2 col-sm-1">
+						<input type="text" class="form-control " id="input-cycle" name="cycle" value="{$k}">
+					</div>
+					<table class="table table-hover table-bordered">
+						<thead>
+						<tr>
+							<th>中奖倍数</th>
+							<th>数量</th>
+							<th>操作</th>
+						</tr>
+						</thead>
+						<tbody id="{$k}">
+						<foreach name="vo" key="kk" id="num">
+							<tr>
+								<td contenteditable="true">{$kk}</td>
+								<td contenteditable="true">{$num}</td>
+								<td onclick="del(this)" class="btn btn-xs btn-warning">删除</td>
+							</tr>
+						</foreach>
+						</tbody>
+					</table>
+					<!--<a class="btn btn-xs btn-warning js-ajax-dialog-btn" href="{:url('Jackpotwin/edit',array('id'=>$gift_id))}">提交</a>-->
+					<a  onclick="add('<?php echo $k;?>')" class="btn btn-xs btn-warning">添加</a>
+				</foreach>
+			<!--</div>-->
+		</div>
+		<a  onclick="closeRoom('<?php echo $gift_id;?>')" class="btn btn-xs btn-warning">提交</a>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		function add(k) {
+            // var max = $("#tb tr").length + 1;
+            var max = 100;
+            $("#" + k).append("<tr><td contenteditable='true'>"+ max + "</td><td contenteditable='true'>0</td><td  onclick='del(this)' class='btn btn-xs btn-warning'>删除</td></tr>");
+        }
+        function del(obj) {
+           $(obj).parent().remove();
+            // alert(tr);
+        }
+        function closeRoom(giftId) {
+            var tem = [];
+            var count = [];
+            var all = $("#all");
+            // var tb = $("#tb tr");
+            var totol_times = 0;
+            var cycle = [];
+            // console.log(my_type);
+            $.each(all, function (i) {
+                console.log($(this));
+                var son = $(this).children('tbody');
+                console.log($('#input-cycle').val());
+                var sonCycle = $(this).children($('.form-control')).val();
+                // alert($('.form-control').val());
+                alert(sonCycle);
+                $.each(son, function () {
+                    var times = $(this).children('td').eq(0).text();
+                    var num = $(this).children('td').eq(1).text();
+                    if (times > 0 && num > 0) {
+                        tem.push(times);
+                        count.push(num);
+                       var son_totol_times = parseInt(times) * parseInt(num);
+                        cycle[sonCycle][times] = num;
+                        totol_times += son_totol_times;
+                    }
+                })
+            })
+            if (confirm("总倍数为"+ totol_times + "确认提交吗")) {
+                $.ajax({
+                    type: 'POST',
+                    async: false,
+                    url: '/admin/jackpotwin/editPost',
+                    data:{id:giftId, info:tem, num:count},
+                    dataType: "json",
+                    success: function(data){
+                        console.log(data);
+                        if(data.status ==0){
+                            alert(data.info);
+                        }else{
+                            // location.reload();
+                            history.back();
+                        }
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        alert('编辑失败！');
+                    }
+                });
+			}
+        }
+	</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="appapi@head"/>
+    <title>开店保证金</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/appapi/css/bond.css?t=1565083698">
+
+</head>
+<body>
+    <div class="bond">
+        <div class="bond_coin">
+            <span class="bond_coin_l">需要缴纳金额</span>
+            <span class="bond_coin_r"><if condition="$info">{$info['bond']}<else/>{$shop_bond}</if><img src="__STATIC__/appapi/images/coin.png" class="coin"></span>
+        </div>
+        <div class="line10"></div>
+        <div class="ready_tips">
+            <div class="ready_tips_t">保证金说明</div>
+            <div class="ready_tips_d2">
+                <p>1、 保证金由商户交由平台暂时保管，用于约束商户行为，保障消费者权益。</p>
+                <p>2、 用户撤销我的小店时，可申请退还保证金。</p>
+                <p>3、 当用户开通店铺后，若存在欺骗消费者、售卖假冒伪劣产品等一切违反国家法律法规以及平台规定的等行为，平台有权强制关闭店铺，保证金不予退还。</p>
+                <p>4、 店铺保证金最终解释权归平台所有。</p>
+            </div>
+        </div>
+        
+        <if condition="$info">
+        <div class="bond_btn no">
+            已缴纳
+        </div>
+        <else/>
+        <div class="bond_btn ok">
+            确认缴纳
+        </div>
+        </if>
+    </div>
+    
+	<include file="appapi@footer"/>
+    <script>
+        (function(){
+            $(".ok").click(function(){
+                $.ajax({
+                    url:'/Appapi/shop/bond_post',
+                    type:'POST',
+                    data:{uid:uid,token:token},
+                    dataType:'json',
+                    success:function(data){
+                        var code=data.code;
+                        var msg=data.msg;
+                        var info=data.info;
+                        if(code!=0){
+                            layer.msg(msg);
+                            return !1;
+                        }
+                        
+                        layer.msg(msg,{},function(){
+                            history.back();
+                        })
+                    },
+                    error:function(e){
+                    }
+                    
+                });
+            
+            })
+        })()
+	</script>
+</body>
+</html>

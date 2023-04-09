@@ -1,0 +1,41 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >列表</a></li>
+			<a href="javascript:openDealDialog('jackpot','添加用户');">添加</a>
+		</ul>
+		<form method="post" class="js-ajax-form" action="{:url('adminIndex/jackpotuser')}">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>用户ID</th>
+						<td>用户昵称</td>
+						<th>操作人</th>
+						<th>添加时间</th>
+						<th>{:lang('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo.uid}</td>
+						<td>{$vo['user_nicename']}</td>
+						<td>{$vo['operator']}</td>
+						<td>{:date('Y-m-d H:i',$vo['addtime'])}</td>
+						<td>
+							<a class="btn btn-xs btn-danger js-ajax-delete" href="{:url('adminIndex/delJackpot',array('uid'=>$vo['uid']))}">{:lang('DELETE')}</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

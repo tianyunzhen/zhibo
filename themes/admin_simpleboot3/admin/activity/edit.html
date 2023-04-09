@@ -1,0 +1,91 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:url('activity/index')}">列表</a></li>
+			<li class="active"><a >{:lang('EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('activity/editPost')}">
+            <div class="form-group">
+				<label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>名称</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-name" name="name" value="{$data['name']}">
+				</div>
+			</div>
+            <div class="form-group">
+				<label for="input-link" class="col-sm-2 control-label"><span class="form-required">*</span>内网地址</label>
+				<div class="col-md-6 col-sm-50">
+					<input type="text" class="form-control" id="input-link" name="link" value="{$data['link']}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-start_time" class="col-sm-2 control-label"><span class="form-required">*</span>开始时间</label>
+				<div class="col-md-2 col-sm-2">
+					<input class="form-control js-bootstrap-datetime" name="start_time" id="start_time" value="{:date('Y-m-d H:i',$data['start_time'])}" aria-invalid="false" style="width: 200px;" required="required">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-end_time" class="col-sm-2 control-label"><span class="form-required">*</span>开始时间</label>
+				<div class="col-md-2 col-sm-2">
+					<input class="form-control js-bootstrap-datetime" name="end_time" id="end_time" value="{:date('Y-m-d H:i',$data['end_time'])}" aria-invalid="false" style="width: 200px;" required="required">
+				</div>
+			</div>
+
+            <div class="form-group">
+				<label for="input-banner" class="col-sm-2 control-label"><span class="form-required">*</span>banner</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="hidden" name="banner" id="thumbnail" value="{$data['banner']}">
+                    <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                        <if condition="empty($data.banner)">
+                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                 id="thumbnail-preview"
+                                 style="cursor: pointer;max-width:100px;max-height:100px;"/>
+                        <else/>
+                        <img src="{:cmf_get_image_preview_url($data.banner)}"
+                             id="thumbnail-preview"
+                             style="cursor: pointer;max-width:100px;max-height:100px;"/>
+                        </if>
+                    </a>
+                    <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片"> 建议尺寸： 200 X 200
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-type" class="col-sm-2 control-label"><span class="form-required">*</span>类型</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="form-control" name="status">
+						<volist name="status" id="v">
+							<option value="{$key}" <eq name="data['status']" value="$key">selected</eq>>{$v}</option>
+						</volist>
+					</select>
+				</div>
+			</div>
+            <div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$data.id}" />
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+    <script type="text/javascript">
+        (function(){
+            $('.btn-cancel-thumbnail').click(function () {
+                $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+                $('#thumbnail').val('');
+            });
+            
+            $('.btn-cancel-thumbnail2').click(function () {
+                $('#thumbnail2-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+                $('#thumbnail2').val('');
+            });
+        })()
+
+    </script>
+</body>
+</html>

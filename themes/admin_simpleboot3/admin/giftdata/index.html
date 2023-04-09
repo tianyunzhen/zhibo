@@ -1,0 +1,42 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a>列表</a></li>
+		</ul>
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>名称</th>
+						<th>类型</th>
+						<th>单价</th>
+						<th>送出数量</th>
+						<th>累计中奖倍数</th>
+						<th>消耗丫币</th>
+						<th>累计中奖人数</th>
+						<th>累计中奖金额</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo['giftname']}</td>
+						<td>{$type[$vo['type']]}</td>
+						<td>{$vo['needcoin']}</td>
+                        <td>{$vo['send_num']}</td>
+                        <td>{$vo['total_multiple']}</td>
+                        <td>{$vo['spend_coin']}</td>
+						<td>{$vo['win_man']}</td>
+						<td>{$vo['win_prize']}</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

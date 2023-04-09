@@ -1,0 +1,89 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:url('Cash/index')}">列表</a></li>
+			<li class="active"><a >{:lang('EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Cash/editPost')}">
+            <div class="form-group">
+				<label for="input-user_nicename" class="col-sm-2 control-label"><span class="form-required">*</span>会员</label>
+				<div class="col-md-6 col-sm-10" style="padding-top:7px;">
+					{$data['user_nicename']} ({$data['uid']})
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-money" class="col-sm-2 control-label"><span class="form-required">*</span>提现金额</label>
+				<div class="col-md-6 col-sm-10" style="padding-top:7px;">
+					{$data['money']}
+				</div>
+			</div>
+
+            <div class="form-group">
+				<label for="input-votes" class="col-sm-2 control-label"><span class="form-required">*</span>消耗丫粮</label>
+				<div class="col-md-6 col-sm-10" style="padding-top:7px;">
+					{$data['votes']}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-type" class="col-sm-2 control-label"><span class="form-required">*</span>提现平台</label>
+				<div class="col-md-6 col-sm-10" style="padding-top:7px;">
+					{$type[$data['type']]}<br>
+				</div>
+			</div>
+            
+            <div class="form-group">
+				<label for="input-account" class="col-sm-2 control-label"><span class="form-required">*</span>提现账号</label>
+				<div class="col-md-6 col-sm-10" style="padding-top:7px;">
+                    {$data['account']}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>姓名</label>
+				<div class="col-md-6 col-sm-10" style="padding-top:7px;">
+					{$data['real_name']}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-car_no" class="col-sm-2 control-label"><span class="form-required">*</span>身份证号</label>
+				<div class="col-md-6 col-sm-10" style="padding-top:7px;">
+					{$data['car_no']}  <br>
+				</div>
+			</div>
+            
+			<div class="form-group">
+				<label for="input-remark" class="col-sm-2 control-label"><span class="form-required"></span>备注</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-remark" name="remark" value="{$data['remark']}">
+				</div>
+			</div>
+            
+            <div class="form-group">
+				<label for="input-status" class="col-sm-2 control-label"><span class="form-required">*</span>状态</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="form-control" name="status">
+                        <volist name="status" id="v">
+                        <option value="{$key}" <eq name="data['status']" value="$key">selected</eq>>{$v}</option>
+                        </volist>
+                    </select>
+				</div>
+			</div>
+            
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$data.id}" />
+					<input type="hidden" name="c_type" value="{$c_type}"/>
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

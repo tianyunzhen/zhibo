@@ -1,0 +1,62 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >列表</a></li>
+			<li><a href="{:url('headborder/add')}">{:lang('ADD')}</a></li>
+			<li><a href="{:url('headborder/addUser')}">赠送头像</a></li>
+			<li><a href="{:url('headborder/userIndex')}">用户头像</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form" action="{:url('headborder/listOrder')}">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>名称</th>
+						<td>类型</td>
+						<th>图标</th>
+						<th>丫币</th>
+						<th>状态</th>
+						<th>生效时长</th>
+						<th>发布时间</th>
+						<th>{:lang('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo['title']}</td>
+						<td>{$type[$vo['type']]}</td>
+						<td><img src="{$vo['pic']}" style="max-height:30px;max-width:30px;"/></td>
+						<td>{$vo['price']}</td>
+						<td>{$status[$vo['is_up']]}</td>
+						<td>
+							<if condition="$vo['overdue'] eq 0">
+								永久
+							<else/>
+								{$vo['overdue']}天
+							</if>
+						</td>
+						<td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+						<td>
+							<if condition="$vo['is_up'] eq 2">
+								<a class="btn btn-xs btn-warning js-ajax-dialog-btn" href="{:url('headborder/on',array('id'=>$vo['id'],'is_up'=>1))}" >上架</a>
+								<else/>
+								<a class="btn btn-xs btn-warning js-ajax-dialog-btn" href="{:url('headborder/on',array('id'=>$vo['id'],'is_up'=>2))}" >下架</a>
+							</if>
+                            <a class="btn btn-xs btn-primary" href='{:url("headborder/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
+							<a class="btn btn-xs btn-danger js-ajax-delete" href="{:url('headborder/del',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

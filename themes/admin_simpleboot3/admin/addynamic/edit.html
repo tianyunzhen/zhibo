@@ -1,0 +1,75 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('Addynamic/index')}">动态广告列表</a></li>
+        <li><a href="{:url('Addynamic/index')}">添加动态广告</a></li>
+        <li class="active"><a>编辑动态广告页面</a></li>
+    </ul>
+    <form action="{:url('Addynamic/editPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th><span class="form-required">*</span>用户id</th>
+                        <td>
+                            <input class="form-control" type="text" style="width:400px;" name="post[id]" id="id"
+                                   required value="{$result.id}" placeholder="请输入用户id"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>广告内容</th>
+                        <td>
+                            <input class="form-control" type="text" name="post[title]" id="keywords" value="{$result.title}"
+                                   style="width: 400px" placeholder="请输入广告内容">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>视频封面</th>
+                        <td><input class="form-control" type="text" name="post[video_thumb]" id="source"
+                                   value="{$result.video_thumb}" style="width: 400px" placeholder="请填写图片云存储地址"></td>
+                    </tr>
+                    <tr>
+                        <th>视频地址</th>
+                        <td>
+                            <textarea class="form-control" name="post[href]" id="description"
+                                      style="width: 47%; height: 100px;"
+                                      placeholder="请填写视频云存储地址">{$result.href}</textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>跳转地址</th>
+                        <td>
+                            <textarea class="form-control" name="post[is_adurl]" id="description"
+                                      style="width: 47%; height: 100px;"
+                                      placeholder="请填写视频云存储地址">{$result.is_adurl}</textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>跳转方式</th>
+                        <td>
+                            <textarea class="form-control" name="post[is_adurl]" id="description"
+                                      style="width: 47%; height: 100px;"
+                                      placeholder="跳转内部浏览填写1，外部浏览器填写2">{$result.is_adurl}</textarea>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="hidden" name="post[id]" value="{$result.id}"/>
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                <a class="btn btn-default" href="{:url('Addynamic/index'}">{:lang('BACK')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

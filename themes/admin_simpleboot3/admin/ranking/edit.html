@@ -1,0 +1,70 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:url('Ranking/index')}">列表</a></li>
+			<li class="active"><a >{:lang('EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Ranking/editPost')}">
+            <div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label"><span class="form-required">*</span>名称</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-title" name="title" value="{$data['title']}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-type" class="col-sm-2 control-label"><span class="form-required">*</span>类型</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="form-control" name="type">
+						<volist name="type" id="v">
+							<option value="{$key}" <eq name="data['type']" value="$key">selected</eq>>{$v}</option>
+						</volist>
+					</select>
+				</div>
+			</div>
+
+            <div class="form-group">
+				<label for="input-no" class="col-sm-2 control-label"><span class="form-required">*</span>等级</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-needcoin" name="no" value="{$data['no']}" maxlength="9">
+				</div>
+			</div>
+
+            <div class="form-group">
+				<label for="input-money" class="col-sm-2 control-label"><span class="form-required">*</span>金额</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-money" name="money" value="{$data['money']}">
+				</div>
+			</div>
+            
+            <div class="form-group">
+				<label for="input-min" class="col-sm-2 control-label"><span class="form-required">*</span>最低名次</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-min" name="min" value="{$data['min']}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-max" class="col-sm-2 control-label"><span class="form-required">*</span>最高名次</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-expire" name="max" value="{$data['max']}">注：单位天 0代表永久
+				</div>
+			</div>
+
+            <div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$data.id}" />
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script type="text/javascript">
+	</script>
+</body>
+</html>

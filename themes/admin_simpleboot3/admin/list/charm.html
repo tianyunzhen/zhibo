@@ -1,0 +1,47 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap">
+	<ul class="nav nav-tabs">
+		<li class="active"><a >列表</a></li>
+	</ul>
+	<form class="well form-inline margin-top-20" method="post" action="{:url('list/charm')}">
+		快捷筛选：
+		<select class="form-control" name="time_type">
+			<option value="">全部</option>
+			<option value="1" <if condition="input('request.time_type') neq '' && input('request.time_type') eq 1">selected</if>>今日</option>
+			<option value="2" <if condition="input('request.time_type') neq '' && input('request.time_type') eq 2">selected</if>>昨日</option>
+			<option value="3" <if condition="input('request.time_type') neq '' && input('request.time_type') eq 3">selected</if>>本周</option>
+			<option value="4" <if condition="input('request.time_type') neq '' && input('request.time_type') eq 4">selected</if>>本月</option>
+		</select>
+		时间范围：
+		<input class="form-control js-bootstrap-date" name="start_time" id="start_time" value="{:input('request.start_time')}" aria-invalid="false" style="width: 110px;"> -
+		<input class="form-control js-bootstrap-date" name="end_time" id="end_time" value="{:input('request.end_time')}" aria-invalid="false" style="width: 110px;">
+		<input type="submit" class="btn btn-primary" value="搜索"/>
+		<a class="btn btn-danger" href="{:url('list/charm')}">清空</a>
+	</form>
+	<form method="post" class="js-ajax-form" >
+		<table class="table table-hover table-bordered">
+			<thead>
+			<tr>
+				<th>名次</th>
+				<th>用户昵称（ID）</th>
+				<th>丫粮收入</th>
+			</tr>
+			</thead>
+			<tbody>
+			<foreach name="lists" item="vo">
+				<tr>
+					<td>{$vo.no}</td>
+					<td>{$vo['user_nicename']} ({$vo['uid']}) </td>
+					<td>{$vo['total_diamond']}</td>
+				</tr>
+			</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

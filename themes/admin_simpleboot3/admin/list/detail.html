@@ -1,0 +1,34 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap">
+	<ul class="nav nav-tabs">
+		<li class="active"><a >列表</a></li>
+	</ul>
+	<form method="post" class="js-ajax-form" >
+		<table class="table table-hover table-bordered">
+			<thead>
+			<tr>
+				<th>名次</th>
+				<th>主播ID</th>
+				<th>主播昵称</th>
+				<th>丫粮总收入</th>
+			</tr>
+			</thead>
+			<tbody>
+			<foreach name="lists" item="vo">
+				<tr>
+					<td>{$vo.no}</td>
+					<td>{$vo['uid']}</td>
+					<td>{$vo['user_nicename']}</td>
+					<td>{$vo['total_profit']}</td>
+				</tr>
+			</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

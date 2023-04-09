@@ -1,0 +1,64 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a>列表</a></li>
+			<li><a href="javascript:openDealDialog('add','添加广告');">添加</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form" >
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>排序</th>
+						<th>名称</th>
+						<th>图片</th>
+						<th>H5地址</th>
+						<th>位置</th>
+						<th>预发布</th>
+						<th>开始时间</th>
+						<th>结束时间</th>
+						<th>修改时间</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo.sort}</td>
+						<td>{$vo['name']}</td>
+						<td><img width="25" height="25" src="{$vo['pic']}" /></td>
+						<td>{$vo['link']}</td>
+						<td>
+							<if condition="$vo['site'] eq 1">
+								热门
+								<else/>
+								附近
+							</if>
+						</td>
+						<td>
+							<if condition="$vo['is_pre'] eq 1">
+								是
+								<else/>
+								否
+							</if>
+						</td>
+						<td>{:date('Y-m-d H:i:s',$vo['start_time'])}</td>
+						<td>{:date('Y-m-d H:i:s',$vo['end_time'])}</td>
+						<td>{:date('Y-m-d H:i:s',$vo['up_time'])}</td>
+						<td>
+							<a class="btn btn-xs btn-primary" href='{:url("advert/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
+							<a class="btn btn-xs btn-danger js-ajax-delete" href="{:url('advert/del',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

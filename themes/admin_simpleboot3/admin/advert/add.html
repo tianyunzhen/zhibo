@@ -1,0 +1,146 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap">
+	<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('advert/addPost')}">
+
+		<div class="form-group">
+			<label for="input-site" class="col-sm-2 control-label"><span class="form-required">*</span>位置</label>
+			<div class="col-md-6 col-sm-10">
+				<select class="form-control" name="site">
+					<option value="1">热门</option>
+					<option value="2">附近</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>名称</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" id="input-name" name="name" style="width:300px;">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-pic" class="col-sm-2 control-label"><span class="form-required">*</span>图片</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="hidden" name="pic" id="thumbnail" value="">
+				<a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+					<img src="__TMPL__/public/assets/images/default-thumbnail.png"
+						 id="thumbnail-preview"
+						 style="cursor: pointer;max-width:100px;max-height:100px;"/>
+				</a>
+				<input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片"> 建议尺寸： 200 X 200
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-link" class="col-sm-2 control-label"><span class="form-required">*</span>链接</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" id="input-link" name="link" style="width:300px;">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-sort" class="col-sm-2 control-label"><span class="form"></span>排序</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" id="input-sort" name="sort" style="width:300px;">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input-is_pre" class="col-sm-2 control-label"><span class="form"></span>是否预发布</label>
+			<div class="col-md-6 col-sm-10">
+				<select class="form-control" name="is_pre">
+					<option value="1">是</option>
+					<option value="0">否</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-start_time" class="col-sm-2 control-label"><span class="form-required">*</span>开始时间</label>
+			<div class="col-md-2 col-sm-2">
+				<input class="form-control js-bootstrap-datetime" name="start_time" id="start_time" value="{:input('request.start_time')}" aria-invalid="false" style="width: 200px;" required="required">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-end_time" class="col-sm-2 control-label"><span class="form-required">*</span>结束时间</label>
+			<div class="col-md-2 col-sm-2">
+				<input class="form-control js-bootstrap-datetime" name="end_time" id="end_time" value="{:input('request.end_time')}" aria-invalid="false" style="width: 200px;" required="required">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-wealth_level" class="col-sm-2 control-label"><span class="form"></span>财富等级可见</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" id="input-wealth_level" name="wealth_level" style="width:300px;">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input-package_id" class="col-sm-2 control-label"><span class="form"></span>匹配包</label>
+			<div class="col-md-6 col-sm-10">
+				<select class="form-control" name="package_id">
+					<volist name="package" id="v">
+						<option value="{$v.id}">{$v.name}</option>
+					</volist>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+			</div>
+		</div>
+
+	</form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    (function(){
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+        $('.btn-cancel-thumbnail2').click(function () {
+            $('#thumbnail2-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail2').val('');
+        });
+
+        $("#type label input").on('click',function(){
+            var v=$(this).val();
+            if(v==0){
+                $("#mark_3").removeAttr('disabled')
+            }else{
+                //if($("#mark_3").attr("checked")){
+                if($('#mark label input:checked').val()==3){
+                    //$("#mark_0").removeAttr('checked');
+                    $("#mark_0").attr('checked','checked');
+                    $("#tips").hide();
+                }
+                $("#mark_3").attr('disabled','disabled');
+            }
+        })
+
+        $("#mark label input").on('change',function(){
+            var v=$(this).val();
+            if(v==3){
+                $("#tips").show();
+            }else{
+                $("#tips").hide();
+            }
+        })
+
+        $("#swftype label").on('click',function(){
+            var v=$("input",this).val();
+            var b=$("#swftype_bd_"+v);
+            b.siblings().hide();
+            b.show();
+        })
+    })()
+</script>
+</body>
+</html>

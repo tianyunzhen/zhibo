@@ -1,0 +1,81 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >{:lang('ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('headborder/addUserPost')}">
+			<div class="form-group">
+				<label for="input-type" class="col-sm-2 control-label"><span class="form-required">*</span>头像</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="form-control" name="head_id">
+						<volist name="head" id="v">
+							<option value="{$v.id}">{$v.title}</option>
+						</volist>
+					</select>
+				</div>
+			</div>
+            <div class="form-group">
+				<label for="input-uid" class="col-sm-2 control-label"><span class="form-required">*</span>用户ID</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-uid" name="uid" maxlength="9">
+				</div>
+			</div>
+            
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+            
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script>
+        (function(){
+            $('.btn-cancel-thumbnail').click(function () {
+                $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+                $('#thumbnail').val('');
+            });
+
+            $('.btn-cancel-thumbnail2').click(function () {
+                $('#thumbnail2-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+                $('#thumbnail2').val('');
+            });
+
+            $("#type label input").on('click',function(){
+                var v=$(this).val();
+                if(v==0){
+                    $("#mark_3").removeAttr('disabled')
+                }else{
+                    //if($("#mark_3").attr("checked")){
+                    if($('#mark label input:checked').val()==3){
+                        //$("#mark_0").removeAttr('checked');
+                        $("#mark_0").attr('checked','checked');
+                        $("#tips").hide();
+                    }
+                    $("#mark_3").attr('disabled','disabled');
+                }
+            })
+
+            $("#mark label input").on('change',function(){
+                var v=$(this).val();
+                if(v==3){
+                    $("#tips").show();
+                }else{
+                    $("#tips").hide();
+                }
+            })
+
+            $("#swftype label").on('click',function(){
+                var v=$("input",this).val();
+                var b=$("#swftype_bd_"+v);
+                b.siblings().hide();
+                b.show();
+            })
+        })()
+	</script>
+</body>
+</html>

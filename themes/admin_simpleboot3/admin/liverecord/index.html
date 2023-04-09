@@ -1,0 +1,59 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >列表</a></li>
+		</ul>
+		
+		<form class="well form-inline margin-top-20" method="post" action="{:url('liverecord/index')}">
+            时间：
+			<input class="form-control js-bootstrap-date" name="start_time" id="start_time" value="{:input('request.start_time')}" aria-invalid="false" style="width: 110px;"> - 
+            <input class="form-control js-bootstrap-date" name="end_time" id="end_time" value="{:input('request.end_time')}" aria-invalid="false" style="width: 110px;">
+			主播ID：
+            <input class="form-control" type="text" name="uid" style="width: 200px;" value="{:input('request.uid')}"
+                   placeholder="请输入会员id">
+                   
+			<input type="submit" class="btn btn-primary" value="搜索">
+		</form>		
+		<form method="post" class="js-ajax-form" >
+
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>用户（ID）</th>
+						<th>类型</th>
+						<th>流名</th>
+						<th>开播时间</th>
+						<th>关播时间</th>
+						<th>总时长</th>
+						<th>丫粮收入</th>
+						<th>观看人数</th>
+						<th>打赏人数</th>
+						<th>新增关注</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>{$vo.uid}({$vo.user_nicename})</td>
+						<td>暂无</td>
+						<td>{$vo['stream']}</td>
+						<td>{:date('Y-m-d H:i',$vo['starttime'])}</td>
+						<td>{:date('Y-m-d H:i',$vo['endtime'])}</td>
+						<td>{$vo['live_length']}</td>
+						<td>{$vo['votes']}</td>
+						<td>{$vo['live_nums']}</td>
+						<td>{$vo['gift_sender_num']}</td>
+						<td>{$vo['new_fans_num']}</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

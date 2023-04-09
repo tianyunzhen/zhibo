@@ -1,0 +1,112 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:url('remark/index')}">列表</a></li>
+			<li class="active"><a >{:lang('EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('remark/editPost')}">
+            <div class="form-group">
+				<label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>名称</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-name" name="name" value="{$data['name']}" style="width:300px;">
+				</div>
+			</div>
+            
+            <div class="form-group">
+				<label for="input-level" class="col-sm-2 control-label"><span class="form-required">*</span>等级</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-level" name="level" value="{$data['level']}" style="width:300px;">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-desc" class="col-sm-2 control-label"><span class="form-required">*</span>说明</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-desc" name="desc" value="{$data['desc']}" style="width:300px;">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-auth_desc" class="col-sm-2 control-label"><span class="form-required">*</span>认证说明</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-auth_desc" name="auth_desc" value="{$data['auth_desc']}" style="width:300px;">
+				</div>
+			</div>
+            <div class="form-group">
+				<label for="input-icon" class="col-sm-2 control-label"><span class="form-required">*</span>图片</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="hidden" name="icon" id="thumbnail" value="{$data['icon']}">
+                    <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                        <if condition="empty($data.icon)">
+                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                 id="thumbnail-preview"
+                                 style="cursor: pointer;max-width:100px;max-height:100px;"/>
+                        <else/>
+                        <img src="{:cmf_get_image_preview_url($data.icon)}"
+                             id="thumbnail-preview"
+                             style="cursor: pointer;max-width:100px;max-height:100px;"/>
+                        </if>
+                    </a>
+                    <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片"> 建议尺寸： 200 X 200
+				</div>
+			</div>
+
+            <div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$data.id}" />
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+    <script type="text/javascript">
+        (function(){
+            $('.btn-cancel-thumbnail').click(function () {
+                $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+                $('#thumbnail').val('');
+            });
+            
+            $('.btn-cancel-thumbnail2').click(function () {
+                $('#thumbnail2-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+                $('#thumbnail2').val('');
+            });
+            $("#type label input").on('click',function(){
+                var v=$(this).val();
+                if(v==0){
+                    $("#mark_3").removeAttr('disabled')
+                }else{
+                    //if($("#mark_3").attr("checked")){
+                    if($('#mark label input:checked').val()==3){
+                        //$("#mark_0").removeAttr('checked');
+                        $("#mark_0").attr('checked','checked');
+                        $("#tips").hide();
+                    }
+                    $("#mark_3").attr('disabled','disabled');
+                }
+            })
+            
+            $("#mark label input").on('change',function(){
+                var v=$(this).val();
+                if(v==3){
+                    $("#tips").show();
+                }else{
+                    $("#tips").hide();
+                }
+            })
+            
+            $("#swftype label").on('click',function(){
+                var v=$("input",this).val();
+                var b=$("#swftype_bd_"+v);
+                b.siblings().hide();
+                b.show();
+            })
+        })()
+
+    </script>
+</body>
+</html>
